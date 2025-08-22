@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Sistema{
   public static void main(String[] args) {
@@ -76,8 +75,19 @@ public class Sistema{
         String nombre = JOptionPane.showInputDialog(ventana,"¿Cuál es el nombre del instrumento?'",
                 "Nombre del instrumento", JOptionPane.QUESTION_MESSAGE);
 
-        String tipo = JOptionPane.showInputDialog(ventana,"¿Cuál es el tipo del instrumento?'",
-                "Tipo del instrumento", JOptionPane.QUESTION_MESSAGE);
+        Object [] botonesTipo = {"Test","Escala", "Cuestionario"};
+        int tipoOp = JOptionPane.showOptionDialog(ventana,
+                "¿Cuál es el tipo del instrumento?'",
+                "Tipo del instrumento",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,botonesTipo,botonesTipo[0]);
+        String tipo = switch (tipoOp){
+            case 0 -> "Test";
+            case 1 -> "Escala";
+            case 2 -> "Cuestionario";
+            default -> "";
+        };
 
         Object [] botonesCondicion = {"Estres", "Ansiedad", "Ambos"};
         int condicionOp = JOptionPane.showOptionDialog(ventana,
@@ -134,12 +144,25 @@ public class Sistema{
 
     botonEliminar.addActionListener(new AbstractAction() {
       public void actionPerformed(ActionEvent e) {
-
+        int clave = Integer.parseInt(JOptionPane.showInputDialog(ventana,
+                "Ingrese la clave del instrumento a eliminar: ",
+                "Clave del instrumento a eliminar", JOptionPane.QUESTION_MESSAGE));
+        Instrumento eliminado = control.eliminarInstrumento(clave);
+        JOptionPane.showMessageDialog(ventana,
+                "Instrumento eliminado \n" + eliminado,
+                "Instrumento eliminado", JOptionPane.INFORMATION_MESSAGE);
       }
     });
 
     botonConsultar.addActionListener(new AbstractAction() {
       public void actionPerformed(ActionEvent e) {
+        Object [] botonesConsulta = {"Por autor", "Por funcionalidad", "Por tipo", "Por condición", "Por confiabilidad", "Ordenados por clave"};
+        int consultaOp = JOptionPane.showOptionDialog(ventana,
+                "Elige una consulta",
+                "Consultar un instrumento",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null, botonesConsulta, botonesConsulta[0]);
 
       }
     });
@@ -147,7 +170,7 @@ public class Sistema{
     botonCargar.addActionListener(new AbstractAction() {
       public void actionPerformed(ActionEvent e) {
         String archivo=JOptionPane.showInputDialog(ventana,
-                "Ingrese el nombre del archivo a consultar",
+                "Ingrese el nombre del archivo a consultar: ",
                 "Carga de archivo", JOptionPane.QUESTION_MESSAGE);
         control.cargarArchivo(archivo);
       }
