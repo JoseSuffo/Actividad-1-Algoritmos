@@ -62,19 +62,19 @@ public class Sistema{
     botonCargar.setVisible(true);
     botonSalir.setVisible(true);
 
-    botonCargar.addActionListener(new AbstractAction() {
+    botonAgregar.addActionListener(new AbstractAction() {
+      public void actionPerformed(ActionEvent e){
+        JOptionPane.showMessageDialog(null,"Bienvenido a Sistema de Salud Integral Guasavito");
+      }
+    });
+
+    botonEliminar.addActionListener(new AbstractAction() {
       public void actionPerformed(ActionEvent e) {
 
       }
     });
 
-    botonCargar.addActionListener(new AbstractAction() {
-      public void actionPerformed(ActionEvent e) {
-
-      }
-    });
-
-    botonCargar.addActionListener(new AbstractAction() {
+    botonConsultar.addActionListener(new AbstractAction() {
       public void actionPerformed(ActionEvent e) {
 
       }
