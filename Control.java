@@ -1,8 +1,10 @@
 import javax.swing.*;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 public class Control {
     ArrayList<Instrumento> instrumentos;
+    String archivo;
 
     public Control() {
         instrumentos = new ArrayList<>();
@@ -11,6 +13,7 @@ public class Control {
     public void altas(Instrumento instrumento){
         instrumento.setClave(instrumentos.size()+1);
         instrumentos.add(instrumento);
+        agregarAArchivo(instrumento);
     }
 
     public Instrumento bajas(Instrumento instrumento){
@@ -105,7 +108,19 @@ public class Control {
         altas(instrumento);
     }
 
-    public void agregarAArchivo(){
+    public void agregarAArchivo(Instrumento instrumento) {
+        try (FileWriter fw = new FileWriter("registro.txt", true)){
+            fw.write(instrumento.toString() + "\n");
+        } catch (Exception e) {
+            System.err.println("Error al agregar");
+        }
+    }
 
+    public void cargarArchivo(String archivo){
+
+    }
+
+    public int getNumeroInstrumentos(){
+        return instrumentos.size();
     }
 }
