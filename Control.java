@@ -1,23 +1,25 @@
 import javax.swing.*;
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Control {
+    //Atributo de la clase Control
     ArrayList<Instrumento> instrumentos;
-    String archivo;
 
+    //Constructor de la clase Control
     public Control() {
         instrumentos = new ArrayList<>();
     }
 
+    //Alta de un instrumento en el ArrayList y el archivo
     public void altas(Instrumento instrumento){
         instrumento.setClave(instrumentos.size()+1);
         instrumentos.add(instrumento);
         agregarAArchivo(instrumento);
     }
 
+    //Baja de un instrumento mediante una clave que se recibe como parámetro, si se encuentra se elimina
     public Instrumento bajas(int clave){
         for (int i = 0; i < instrumentos.size(); i++) {
             if (instrumentos.get(i).getClave() == clave) {
@@ -27,8 +29,10 @@ public class Control {
         return null;
     }
 
+    //Consulta de instrumentos por autor, que se recibe como parámetro. Si se encuentra se muestran
+    //si no, se muestra un mensaje.
     public String consultarPorAutor(String autor){
-        ArrayList<String> autores = new ArrayList<>();
+        ArrayList<String> autores;
         for (Instrumento instrumento : instrumentos) {
             autores=instrumento.getAutores();
             if(autores.contains(autor)){
@@ -38,6 +42,8 @@ public class Control {
         return "Autor no encontrado o el autor no tiene instrumentos realizados";
     }
 
+    //Consulta de instrumentos por tipo, que se recibe como parámetro. Si se encuentra se muestran
+    //si no, se muestra un mensaje.
     public String consultarPorTipo(String tipo){
         for (Instrumento instrumento : instrumentos) {
             if(instrumento.getTipo().equals(tipo)){
@@ -47,6 +53,8 @@ public class Control {
         return "Tipo no encontrado o el tipo no tiene instrumentos realizados";
     }
 
+    //Consulta de instrumentos por funcionalidad, que se recibe como parámetro. Si se encuentra se muestran
+    //si no, se muestra un mensaje.
     public String consultarPorFuncionalidad(String funcionalidad){
         for (Instrumento instrumento : instrumentos) {
             if(instrumento.getFuncionalidad().equals(funcionalidad)){
@@ -56,6 +64,8 @@ public class Control {
         return "Funcionalidad no encontrada o la funcionalidad no tiene instrumentos realizados";
     }
 
+    //Consulta de instrumentos por condición, que se recibe como parámetro. Si se encuentra se muestran
+    //si no, se muestra un mensaje.
     public String consultarPorCondicion(String condicion){
         for (Instrumento instrumento : instrumentos) {
             if(instrumento.getCondicion().equals(condicion)){
@@ -65,6 +75,8 @@ public class Control {
         return "Condición no encontrada o la condición no tiene instrumentos realizados";
     }
 
+    //Consulta de instrumentos por confiabilidad, que se recibe como parámetro. Si se encuentra se muestran
+    //si no, se muestra un mensaje.
     public String consultarPorConfiabilidad(int confiabilidad){
         for (Instrumento instrumento : instrumentos) {
             if(instrumento.getConfiabilidad() == confiabilidad){
@@ -74,6 +86,8 @@ public class Control {
         return "Confiabilidad no encontrada o la confiabilidad no tiene instrumentos realizados";
     }
 
+    //Consulta de todos los instrumentos ordenados por clave (debido a que se crean claves en orden
+    //numérico y ya estan ordenadas).
     public String consultarTodosLosInstrumentos(){
         String instrumentosMensaje = "";
         for (Instrumento instrumento : instrumentos) {
@@ -85,6 +99,9 @@ public class Control {
         return instrumentosMensaje;
     }
 
+
+    //Consulta de todos los instrumentos ordenados por primer autor. Todos los primeros autores de cada instrumento
+    //se comparan y se ordenan dependiendo de cuál tiene una letra inicial más baja.
     public String consultarOrdenadosPorPrimerAutor(){
         instrumentos.sort((o1, o2) ->
                 o1.getPrimerAutor().compareToIgnoreCase(o2.getPrimerAutor()));
@@ -95,10 +112,13 @@ public class Control {
         return instrumentosOrdenadosPrimerA;
     }
 
+    //Metodo que crea un instrumento
     public void crearInstrumento(Instrumento instrumento){
         altas(instrumento);
     }
 
+    //Se agrega un instrumento recibido como parámetro a un archivo de texto predefinido previamente.
+    //Esto se logra con la clase FileWriter.
     public void agregarAArchivo(Instrumento instrumento) {
         try (FileWriter fw = new FileWriter("registro.txt", true)){
             fw.write(instrumento.versionArchivo() + "\n");
@@ -107,6 +127,8 @@ public class Control {
         }
     }
 
+    //Se cargan los instrumentos de un archivo que se recibe como parámetro a nuestro ArrayList de instrumentos.
+    //Cada linea de texto se lee y se separa para poder agregarla al arraylist correspondiente.
     public void cargarArchivo(String nombreArchivo){
         try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
             String linea;
@@ -129,6 +151,7 @@ public class Control {
         }
     }
 
+    //Getter del número de instrumentos añadidos al ArrayList
     public int getNumeroInstrumentos(){
         return instrumentos.size();
     }
