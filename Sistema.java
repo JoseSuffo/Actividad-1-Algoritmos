@@ -6,10 +6,6 @@ import java.util.ArrayList;
 public class Sistema{
   public static void main(String[] args) {
     Control control = new Control();
-//    ArrayList<String> autores = new ArrayList<>();
-//    autores.add("Prueba");
-//    Instrumento instrumento = new Instrumento("SH", "Encuesta", "Estres", "Identificar", "Mexicali", autores, 1, 2);
-//    System.out.println(instrumento);
 
     JFrame ventana = new JFrame("Salud de Sistema Integral Guasavito");
     ventana.setSize(600,600);
@@ -147,7 +143,7 @@ public class Sistema{
         int clave = Integer.parseInt(JOptionPane.showInputDialog(ventana,
                 "Ingrese la clave del instrumento a eliminar: ",
                 "Clave del instrumento a eliminar", JOptionPane.QUESTION_MESSAGE));
-        Instrumento eliminado = control.eliminarInstrumento(clave);
+        Instrumento eliminado = control.bajas(clave);
         JOptionPane.showMessageDialog(ventana,
                 "Instrumento eliminado \n" + eliminado,
                 "Instrumento eliminado", JOptionPane.INFORMATION_MESSAGE);
@@ -190,8 +186,8 @@ public class Sistema{
           case 3:
             consulta = JOptionPane.showInputDialog(ventana,
                     "Ingresa el nombre de la condición a buscar: ",
-                    "Consulta por funcionalidad", JOptionPane.QUESTION_MESSAGE);
-            JOptionPane.showMessageDialog(ventana, control.consultarPorFuncionalidad(consulta),
+                    "Consulta por condicion", JOptionPane.QUESTION_MESSAGE);
+            JOptionPane.showMessageDialog(ventana, control.consultarPorCondicion(consulta),
                     "Consulta realizada", JOptionPane.INFORMATION_MESSAGE);
             break;
           case 4:
