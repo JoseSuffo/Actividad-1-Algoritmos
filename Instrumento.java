@@ -8,8 +8,8 @@ public class Instrumento {
     public Instrumento(String nombre, String tipo, String condicion, String funcionalidad, String cita, ArrayList<String> autores, int confiabilidad, int clave) {
         this.nombre = nombre;
         this.tipo = tipo;
-        this.condicion = condicion;
-        this.funcionalidad = funcionalidad;
+        this.condicion = condicion; //Estres, ansiedad o ambos
+        this.funcionalidad = funcionalidad; //Identificar o manejar
         this.cita = cita;
         this.autores = autores;
         this.confiabilidad = confiabilidad;
@@ -36,9 +36,20 @@ public class Instrumento {
         return confiabilidad;
     }
 
-    public String toString(){
-        return nombre + "\n" + tipo + "\n" + condicion + "\n" + funcionalidad + "\n" + cita + "\n" + autores +
-                "\n" + confiabilidad + "\n" + clave + "\n";
+    public String versionArchivo(){
+        return nombre + "," + tipo + "," + condicion + "," + funcionalidad + "," + cita + "," + autores +
+                "," + confiabilidad + "," + clave;
+    }
+
+    public String toString() {
+        String confiabilidadString = "";
+        if(this.confiabilidad==1){
+            confiabilidadString = "Confiable";
+        }else{
+            confiabilidadString = "No confiable";
+        }
+        return "Nombre: "+nombre + "\n" + "Tipo: " + tipo + "\n" + "Condición: " + condicion + "\n" + "Funcionalidad: " + funcionalidad + "\n" + "Lugar de cita: " + cita + "\n"
+                + "Autores: " + autores + "\n" + "Confiablidad: " + confiabilidadString + "\n" + "Clave: " + clave;
     }
 
     public int getClave() {
@@ -47,5 +58,9 @@ public class Instrumento {
 
     public void setClave(int clave) {
         this.clave = clave;
+    }
+
+    public String getPrimerAutor(){
+        return autores.get(0);
     }
 }
