@@ -1,6 +1,10 @@
 import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Control {
     ArrayList<Instrumento> instrumentos;
@@ -17,8 +21,11 @@ public class Control {
     }
 
     public Instrumento bajas(Instrumento instrumento){
-        instrumentos.remove(instrumento);
-        return instrumento;
+        if(instrumentos.contains(instrumento)) {
+            instrumentos.remove(instrumento);
+            return instrumento;
+        }
+        return null;
     }
 
     public ArrayList<Instrumento> getInstrumentos(){
@@ -77,7 +84,7 @@ public class Control {
         for (Instrumento instrumento : instrumentos) {
             ordenClave += instrumento.toString() + "\n";
         }
-        if(ordenClave.equals("")){
+        if(ordenClave.isEmpty()){
             return "No hay instrumentos realizados";
         }
         return ordenClave;
@@ -88,17 +95,16 @@ public class Control {
         for (Instrumento instrumento : instrumentos) {
             instrumentosMensaje += instrumento.toString() + "\n";
         }
-        if(instrumentosMensaje.equals("")){
+        if(instrumentosMensaje.isEmpty()){
             return "No hay instrumentos realizados";
         }
         return instrumentosMensaje;
     }
 
     public Instrumento eliminarInstrumento(int clave){
-        for (Instrumento instrumento : instrumentos) {
-            if(instrumento.getClave() == clave){
-                bajas(instrumento);
-                return instrumento;
+        for (int i = 0; i < instrumentos.size(); i++) {
+            if (instrumentos.get(i).getClave() == clave) {
+                return instrumentos.remove(i);
             }
         }
         return null;
@@ -110,14 +116,31 @@ public class Control {
 
     public void agregarAArchivo(Instrumento instrumento) {
         try (FileWriter fw = new FileWriter("registro.txt", true)){
-            fw.write(instrumento.toString() + "\n");
+            fw.write(instrumento.versionArchivo() + "\n");
         } catch (Exception e) {
-            System.err.println("Error al agregar");
+            System.err.println("Error al agregar instrumento");
         }
     }
 
-    public void cargarArchivo(String archivo){
-
+    public void cargarArchivo(String nombreArchivo){
+        try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
+            String linea;
+            while((linea = br.readLine()) != null){
+                String [] valores = linea.split("\n");
+                String nombre = valores[0];
+                String tipo = valores[1];
+                String condicion = valores[2];
+                String funcionalidad = valores[3];
+                String cita = valores[4];
+                String [] autoresAux = valores[5].split(",");
+                ArrayList<String> autores = new ArrayList<>(Arrays.asList(autoresAux));
+                int confiablidad = Integer.parseInt(valores[6]);
+                int clave = Integer.parseInt(valores[7]);
+                instrumentos.add(new Instrumento(nombre, tipo, condicion, funcionalidad, cita, autores, confiablidad, clave));
+            }
+        } catch (Exception e){
+            System.err.println("Error al cargar el archivo");
+        }
     }
 
     public int getNumeroInstrumentos(){
