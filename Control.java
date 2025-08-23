@@ -1,7 +1,5 @@
 import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,16 +18,13 @@ public class Control {
         agregarAArchivo(instrumento);
     }
 
-    public Instrumento bajas(Instrumento instrumento){
-        if(instrumentos.contains(instrumento)) {
-            instrumentos.remove(instrumento);
-            return instrumento;
+    public Instrumento bajas(int clave){
+        for (int i = 0; i < instrumentos.size(); i++) {
+            if (instrumentos.get(i).getClave() == clave) {
+                return instrumentos.remove(i);
+            }
         }
         return null;
-    }
-
-    public ArrayList<Instrumento> getInstrumentos(){
-        return instrumentos;
     }
 
     public String consultarPorAutor(String autor){
@@ -100,15 +95,6 @@ public class Control {
         return instrumentosOrdenadosPrimerA;
     }
 
-    public Instrumento eliminarInstrumento(int clave){
-        for (int i = 0; i < instrumentos.size(); i++) {
-            if (instrumentos.get(i).getClave() == clave) {
-                return instrumentos.remove(i);
-            }
-        }
-        return null;
-    }
-
     public void crearInstrumento(Instrumento instrumento){
         altas(instrumento);
     }
@@ -136,6 +122,7 @@ public class Control {
                 int confiablidad = Integer.parseInt(valores[6]);
                 int clave = Integer.parseInt(valores[7]);
                 instrumentos.add(new Instrumento(nombre, tipo, condicion, funcionalidad, cita, autores, confiablidad, clave));
+                JOptionPane.showMessageDialog(null, "Instrumentos cargados", "Informacion cargada", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception e){
             JOptionPane.showMessageDialog(null, "Error al cargar instrumento", "Error", JOptionPane.ERROR_MESSAGE);
