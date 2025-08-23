@@ -79,17 +79,6 @@ public class Control {
         return "Confiabilidad no encontrada o la confiabilidad no tiene instrumentos realizados";
     }
 
-    public String consultarPorOrdenClave(){
-        String ordenClave = "";
-        for (Instrumento instrumento : instrumentos) {
-            ordenClave += instrumento.toString() + "\n";
-        }
-        if(ordenClave.isEmpty()){
-            return "No hay instrumentos realizados";
-        }
-        return ordenClave;
-    }
-
     public String consultarTodosLosInstrumentos(){
         String instrumentosMensaje = "";
         for (Instrumento instrumento : instrumentos) {
@@ -99,6 +88,16 @@ public class Control {
             return "No hay instrumentos realizados";
         }
         return instrumentosMensaje;
+    }
+
+    public String consultarOrdenadosPorPrimerAutor(){
+        instrumentos.sort((o1, o2) ->
+                o1.getPrimerAutor().compareToIgnoreCase(o2.getPrimerAutor()));
+        String instrumentosOrdenadosPrimerA = "";
+        for (Instrumento instrumento : instrumentos) {
+            instrumentosOrdenadosPrimerA += instrumento.toString() + "\n";
+        }
+        return instrumentosOrdenadosPrimerA;
     }
 
     public Instrumento eliminarInstrumento(int clave){
@@ -118,7 +117,7 @@ public class Control {
         try (FileWriter fw = new FileWriter("registro.txt", true)){
             fw.write(instrumento.versionArchivo() + "\n");
         } catch (Exception e) {
-            System.err.println("Error al agregar instrumento");
+            JOptionPane.showMessageDialog(null, "Error al agregar instrumento", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -126,7 +125,7 @@ public class Control {
         try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
             String linea;
             while((linea = br.readLine()) != null){
-                String [] valores = linea.split("\n");
+                String [] valores = linea.split(",");
                 String nombre = valores[0];
                 String tipo = valores[1];
                 String condicion = valores[2];
@@ -139,7 +138,7 @@ public class Control {
                 instrumentos.add(new Instrumento(nombre, tipo, condicion, funcionalidad, cita, autores, confiablidad, clave));
             }
         } catch (Exception e){
-            System.err.println("Error al cargar el archivo");
+            JOptionPane.showMessageDialog(null, "Error al cargar instrumento", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
