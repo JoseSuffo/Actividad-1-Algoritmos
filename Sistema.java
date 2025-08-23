@@ -156,14 +156,64 @@ public class Sistema{
 
     botonConsultar.addActionListener(new AbstractAction() {
       public void actionPerformed(ActionEvent e) {
-        Object [] botonesConsulta = {"Por autor", "Por funcionalidad", "Por tipo", "Por condición", "Por confiabilidad", "Ordenados por clave"};
+        Object [] botonesConsulta = {"Por autor", "Por funcionalidad", "Por tipo", "Por condición", "Por confiabilidad", "Ordenados por clave",
+        "Ordenados por primer autor"};
         int consultaOp = JOptionPane.showOptionDialog(ventana,
                 "Elige una consulta",
                 "Consultar un instrumento",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null, botonesConsulta, botonesConsulta[0]);
-
+        String consulta;
+        switch (consultaOp) {
+          case 0:
+            consulta = JOptionPane.showInputDialog(ventana,
+                    "Ingresa el nombre del autor a buscar: ",
+                    "Consulta por autor", JOptionPane.QUESTION_MESSAGE);
+            JOptionPane.showMessageDialog(ventana, control.consultarPorAutor(consulta),
+                    "Consulta realizada", JOptionPane.INFORMATION_MESSAGE);
+            break;
+          case 1:
+            consulta = JOptionPane.showInputDialog(ventana,
+                    "Ingresa el nombre de la funcionalidad a buscar: ",
+                    "Consulta por funcionalidad", JOptionPane.QUESTION_MESSAGE);
+            JOptionPane.showMessageDialog(ventana, control.consultarPorFuncionalidad(consulta),
+                    "Consulta realizada", JOptionPane.INFORMATION_MESSAGE);
+            break;
+          case 2:
+            consulta = JOptionPane.showInputDialog(ventana,
+                    "Ingresa el nombre del tipo a buscar: ",
+                    "Consulta por tipo", JOptionPane.QUESTION_MESSAGE);
+            JOptionPane.showMessageDialog(ventana, control.consultarPorTipo(consulta),
+                    "Consulta realizada", JOptionPane.INFORMATION_MESSAGE);
+            break;
+          case 3:
+            consulta = JOptionPane.showInputDialog(ventana,
+                    "Ingresa el nombre de la condición a buscar: ",
+                    "Consulta por funcionalidad", JOptionPane.QUESTION_MESSAGE);
+            JOptionPane.showMessageDialog(ventana, control.consultarPorFuncionalidad(consulta),
+                    "Consulta realizada", JOptionPane.INFORMATION_MESSAGE);
+            break;
+          case 4:
+            Object [] botones = {"No confiable", "Confiable"};
+            int confiabilidad = JOptionPane.showOptionDialog(ventana,
+                    "Elige la confiabilidad del instrumento",
+                    "Confiabialidad del instrumento",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null, botones, botones[0]);
+            JOptionPane.showMessageDialog(ventana, control.consultarPorConfiabilidad(confiabilidad),
+                    "Consulta realizada", JOptionPane.INFORMATION_MESSAGE);
+            break;
+          case 5:
+            JOptionPane.showMessageDialog(ventana, control.consultarTodosLosInstrumentos(),
+                    "Consulta realizada", JOptionPane.INFORMATION_MESSAGE);
+            break;
+          case 6:
+            JOptionPane.showMessageDialog(ventana, control.consultarOrdenadosPorPrimerAutor(),
+                    "Consulta realizada", JOptionPane.INFORMATION_MESSAGE);
+            break;
+        }
       }
     });
 
