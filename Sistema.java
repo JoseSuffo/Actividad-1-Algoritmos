@@ -7,6 +7,7 @@ public class Sistema{
   public static void main(String[] args) {
     Control control = new Control();
 
+    //Creación de la ventana y todos sus elementos con sus respectivos elementos
     JFrame ventana = new JFrame("Salud de Sistema Integral Guasavito");
     ventana.setSize(600,600);
     ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,6 +65,7 @@ public class Sistema{
     botonCargar.setVisible(true);
     botonSalir.setVisible(true);
 
+    //Se agrega la funcionalidad al botón de agregar para poder crear un nuevo instrumento y agregarlo al archivo
     botonAgregar.addActionListener(new AbstractAction() {
       public void actionPerformed(ActionEvent e){
         JOptionPane.showMessageDialog(null,"Bienvenido a Sistema de Salud Integral Guasavito");
@@ -138,6 +140,7 @@ public class Sistema{
       }
     });
 
+    //Se agrega la funcionalidad al botón de eliminar para pedir la clave y posteriormente eliminar el instrumento con esa clave
     botonEliminar.addActionListener(new AbstractAction() {
       public void actionPerformed(ActionEvent e) {
         int clave = Integer.parseInt(JOptionPane.showInputDialog(ventana,
@@ -150,6 +153,7 @@ public class Sistema{
       }
     });
 
+    //Se agrega la funcionalidad al botón de consultas para pedir un tipo de consulta y realizar lo necesario para realizarla.
     botonConsultar.addActionListener(new AbstractAction() {
       public void actionPerformed(ActionEvent e) {
         Object [] botonesConsulta = {"Por autor", "Por funcionalidad", "Por tipo", "Por condición", "Por confiabilidad", "Ordenados por clave",
@@ -213,6 +217,7 @@ public class Sistema{
       }
     });
 
+    //Se agrega la funcionalidad  al botón de cargar para pedir el nombre de un archivo y cargar los instrumentos que haya en él (si es que hay)
     botonCargar.addActionListener(new AbstractAction() {
       public void actionPerformed(ActionEvent e) {
         String archivo=JOptionPane.showInputDialog(ventana,
@@ -222,12 +227,14 @@ public class Sistema{
       }
     });
 
+    //Se agrega el botón para salir del programa
     botonSalir.addActionListener(new AbstractAction() {
       public void actionPerformed(ActionEvent e) {
         System.exit(0);
       }
     });
 
+    //Se agregan todos los componentes a la ventana y se hacen visibles
     ventana.add(botonAgregar);
     ventana.add(botonEliminar);
     ventana.add(botonConsultar);
